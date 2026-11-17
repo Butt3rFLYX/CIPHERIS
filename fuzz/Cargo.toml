@@ -1,0 +1,38 @@
+# Coverage guided fuzzing with cargo fuzz (needs a nightly toolchain):
+#   cargo install cargo-fuzz
+#   cargo +nightly fuzz run decrypt
+#   cargo +nightly fuzz run png_decode
+#   cargo +nightly fuzz run reveal
+[package]
+name = "cipheris_fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+cipheris_core = { path = "../crates/core" }
+cipheris_stego = { path = "../crates/stego" }
+
+[workspace]
+
+[[bin]]
+name = "decrypt"
+path = "fuzz_targets/decrypt.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "png_decode"
+path = "fuzz_targets/png_decode.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "reveal"
+path = "fuzz_targets/reveal.rs"
+test = false
+doc = false

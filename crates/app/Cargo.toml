@@ -1,0 +1,41 @@
+[package]
+name = "cipheris"
+description = "CIPHERIS desktop app: local offline interface in its own window"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+[lib]
+name = "cipheris_app"
+path = "src/lib.rs"
+
+[[bin]]
+name = "cipheris"
+path = "src/main.rs"
+
+[dependencies]
+cipheris_core.workspace = true
+cipheris_stego.workspace = true
+rand_core.workspace = true
+zeroize.workspace = true
+
+# The app window on macOS and Windows. Linux opens the interface in the
+# browser, so it needs no GTK or WebKitGTK libraries.
+[target.'cfg(any(target_os = "macos", target_os = "windows"))'.dependencies]
+tao = { version = "0.37.2", default-features = false, features = ["rwh_06"] }
+wry = { version = "0.57.2", default-features = false }
+
+[target.'cfg(target_os = "windows")'.dependencies]
+png.workspace = true
+
+[target.'cfg(target_os = "macos")'.dependencies]
+muda = { version = "0.21.2", default-features = false }
+
+[dev-dependencies]
+png.workspace = true
+rand_chacha.workspace = true
+
+[lints]
+workspace = true

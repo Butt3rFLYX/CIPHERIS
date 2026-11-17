@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=CIPHERIS
+Comment=Hide encrypted messages in images, offline
+Exec=cipheris
+Icon=cipheris
+Terminal=false
+Categories=Utility;Security;

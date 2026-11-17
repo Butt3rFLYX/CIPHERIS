@@ -1,0 +1,5 @@
+# The exact compiler every build and every CI job uses (tested with it).
+[toolchain]
+channel = "1.97.0"
+components = ["clippy", "rustfmt"]
+profile = "minimal"

@@ -1,0 +1,27 @@
+version: 2
+updates:
+  # Rust crates: one combined pull request per week for minor and patch
+  # updates. Major versions change APIs and, for the cryptography crates,
+  # could affect the file format; they are upgraded by hand with the
+  # compatibility tests, not automatically.
+  - package-ecosystem: cargo
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3
+    groups:
+      rust-crates:
+        update-types: [minor, patch]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # GitHub Actions: one combined pull request per week.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3
+    groups:
+      github-actions:
+        patterns: ["*"]

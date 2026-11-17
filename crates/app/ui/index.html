@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" translate="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<!-- Never offer machine translation: it would send the decrypted message to a translation service. -->
+<meta name="google" content="notranslate">
+<title>CIPHERIS</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script src="/app.js" defer></script>
+</head>
+<body>
+<div class="term" id="term">
+  <header class="bar">
+    <div class="brand">
+      <img src="/logo.svg" alt="" width="34" height="34">
+      <span class="wordmark">CIPHERIS<span class="cursor" aria-hidden="true">▌</span></span>
+    </div>
+    <div class="bar-right">
+      <nav class="modes" role="tablist" aria-label="Mode" data-i18n-aria="modeLabel">
+        <button role="tab" id="tab-hide" aria-selected="true" aria-controls="panel-hide" data-i18n="tabHide">hide</button>
+        <button role="tab" id="tab-reveal" aria-selected="false" aria-controls="panel-reveal" tabindex="-1" data-i18n="tabReveal">reveal</button>
+      </nav>
+      <div class="langs" role="group" aria-label="Language" data-i18n-aria="langLabel">
+        <button lang="de" data-lang="de" aria-pressed="false" title="Deutsch">DE</button>
+        <button lang="tr" data-lang="tr" aria-pressed="false" title="Türkçe">TR</button>
+        <button lang="en" data-lang="en" aria-pressed="true" title="English">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="session">
+    <p class="ended" id="ended" role="alert" hidden></p>
+
+    <!-- hide -->
+    <section id="panel-hide" role="tabpanel" aria-labelledby="tab-hide">
+      <div class="step">
+        <h2 class="prompt"><span class="p" aria-hidden="true">›</span><span data-i18n="image">image</span></h2>
+        <div class="ind">
+          <label class="drop" id="hide-drop">
+            <input type="file" id="hide-file" accept="image/*">
+            <span class="drop-empty"><b data-i18n="dropImage">Drop an image here</b><span><span data-i18n="dropImageSub">or click to choose one. Photos (JPEG, HEIC and others) are converted to PNG.</span> <span id="hide-limits"></span></span></span>
+            <img class="thumb" alt="">
+            <span class="meta"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="step">
+        <h2 class="prompt"><span class="p" aria-hidden="true">›</span><label for="hide-text" data-i18n="message">message</label></h2>
+        <div class="ind">
+          <textarea id="hide-text" rows="4" placeholder="What should stay secret?" data-i18n-placeholder="messagePlaceholder" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" data-lt-active="false" disabled></textarea>
+          <p class="meter" id="hide-meter" aria-live="polite"><span class="cells" aria-hidden="true"></span><span class="count"></span></p>
+        </div>
+      </div>
+
+      <div class="step">
+        <p class="prompt"><span class="p" aria-hidden="true">›</span><button class="btn" id="hide-go" disabled><span class="lbl">hide message</span><kbd id="hide-kbd">⌘ ⏎</kbd></button><button class="ghost" id="hide-cancel" hidden data-i18n="cancel">cancel</button></p>
+      </div>
+
+      <div class="ind">
+        <div class="log" id="hide-log" role="log" aria-live="polite" hidden></div>
+        <div id="hide-result" hidden>
+          <h2 class="prompt"><span class="p" aria-hidden="true">›</span><span data-i18n="yourKey">your key</span><span class="hint" data-i18n="keyHint">shown once, never stored</span></h2>
+          <div class="key"><code id="hide-key"></code><button class="ghost" id="hide-copy" data-i18n="copy">copy</button></div>
+          <div class="actions"><a class="btn" id="hide-save" download data-i18n="saveImage">save image</a><button class="ghost" id="hide-new" data-i18n="newMessage">new message</button></div>
+          <p class="note"><b data-i18n="noteSeparate">Send image and key separately.</b> <span data-i18n="noteFile">Send the image as a file (mail attachment, AirDrop, USB stick). Messengers compress photos and destroy the message. Clipboard managers may keep copied keys.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- reveal -->
+    <section id="panel-reveal" role="tabpanel" aria-labelledby="tab-reveal" hidden>
+      <div class="step">
+        <h2 class="prompt"><span class="p" aria-hidden="true">›</span><span data-i18n="image">image</span></h2>
+        <div class="ind">
+          <label class="drop" id="reveal-drop">
+            <input type="file" id="reveal-file" accept="image/png">
+            <span class="drop-empty"><b data-i18n="dropPng">Drop the PNG here</b><span data-i18n="dropPngSub">or click to choose it. It must be the exact file CIPHERIS created.</span></span>
+            <img class="thumb" alt="">
+            <span class="meta"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="step">
+        <h2 class="prompt"><span class="p" aria-hidden="true">›</span><label for="reveal-key" data-i18n="key">key</label></h2>
+        <div class="ind">
+          <input id="reveal-key" class="field" type="password" name="cipheris-key" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" data-1p-ignore="true" data-lpignore="true" data-bwignore="true" data-form-type="other" data-gramm="false" data-lt-active="false" placeholder="XXXX XXXX XXXX XXXX XXXX XXXX XXXX">
+          <p class="note"><span data-i18n="keyHidden">hidden while typing</span> · <button class="link" id="reveal-show" aria-pressed="false">show</button> · <span data-i18n="typosDetected">typos are detected</span></p>
+        </div>
+      </div>
+
+      <div class="step">
+        <p class="prompt"><span class="p" aria-hidden="true">›</span><button class="btn" id="reveal-go" disabled><span class="lbl">reveal message</span><kbd>⏎</kbd></button><button class="ghost" id="reveal-cancel" hidden data-i18n="cancel">cancel</button></p>
+      </div>
+
+      <div class="ind">
+        <div class="log" id="reveal-log" role="log" aria-live="polite" hidden></div>
+        <div id="reveal-result" hidden>
+          <div class="plain"><p id="reveal-text" aria-hidden="true"></p><p class="sr" id="reveal-text-sr" aria-live="polite"></p></div>
+          <div class="actions"><button class="ghost" id="reveal-copy" data-i18n="copyText">copy text</button><button class="ghost" id="reveal-clear" data-i18n="clear">clear</button></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="status">
+    <span><span class="dot" aria-hidden="true">●</span> <span data-i18n="local">local</span> <span id="status-addr"></span></span>
+    <span data-i18n="offline">offline</span>
+    <span class="right" id="status-idle"></span>
+    <button class="link" id="quit" data-i18n="quit">quit</button>
+  </footer>
+</div>
+</body>
+</html>

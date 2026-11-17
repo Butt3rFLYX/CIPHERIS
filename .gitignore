@@ -1,0 +1,25 @@
+# Build output
+/target/
+/dist/
+/fuzz/target/
+/fuzz/corpus/
+/fuzz/artifacts/
+
+# Archives (release packages belong in GitHub Releases, not in the repo)
+*.zip
+*.tar.gz
+
+# Tooling
+node_modules/
+__pycache__/
+**/*.rs.bk
+**/mutants.out*/
+rustc-ice-*.txt
+*.pdb
+
+# Editors and OS
+.DS_Store
+.idea/
+.vscode/
+*.tmp
+*.swp

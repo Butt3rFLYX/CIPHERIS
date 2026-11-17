@@ -1,0 +1,51 @@
+[workspace]
+resolver = "2"
+members = ["crates/core", "crates/stego", "crates/app"]
+default-members = ["crates/app"]
+
+[workspace.package]
+version = "0.4.0"
+edition = "2021"
+license = "MIT"
+authors = ["Butt3rFLYX"]
+repository = "https://github.com/Butt3rFLYX/CIPHERIS"
+publish = false
+
+[workspace.dependencies]
+cipheris_core = { path = "crates/core" }
+cipheris_stego = { path = "crates/stego" }
+argon2 = { version = "0.5.3", default-features = false, features = ["alloc", "zeroize"] }
+blake2 = "0.10.6"
+chacha20poly1305 = { version = "0.10.1", features = ["std"] }
+png = "0.17.16"
+rand_chacha = "0.3.1"
+rand_core = { version = "0.6.4", features = ["getrandom"] }
+thiserror = "1.0.69"
+zeroize = { version = "1.8.1", features = ["zeroize_derive"] }
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+
+# Argon2 and PNG are very slow unoptimized; this keeps debug builds and tests fast.
+[profile.dev.package.argon2]
+opt-level = 3
+[profile.dev.package.blake2]
+opt-level = 3
+[profile.dev.package.png]
+opt-level = 3
+[profile.dev.package.miniz_oxide]
+opt-level = 3
+[profile.dev.package.fdeflate]
+opt-level = 3
+
+[profile.release]
+panic = "abort"
+lto = true
+codegen-units = 1
+strip = true
+overflow-checks = true

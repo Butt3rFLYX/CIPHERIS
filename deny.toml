@@ -1,0 +1,33 @@
+# cargo deny: checks licenses, known vulnerabilities and dependency sources.
+[graph]
+all-features = true
+# CI runs `cargo deny --target <triple>` once for every release platform
+# (Linux, macOS on Apple Silicon and Intel, Windows). One target at a time
+# matters: the window toolkit is used on macOS and Windows only, and its
+# Linux GTK backend is never built, so it must not count for any platform.
+
+[advisories]
+version = 2
+yanked = "deny"
+
+[licenses]
+version = 2
+allow = ["MIT", "Apache-2.0", "Apache-2.0 WITH LLVM-exception", "BSD-2-Clause", "BSD-3-Clause", "Unicode-3.0", "Zlib"]
+confidence-threshold = 0.9
+# dirs-sys and its helper option-ext (used by the web view crate on macOS to
+# find the Downloads folder) are MPL-2.0: file level copyleft, used
+# unmodified, compatible with distributing CIPHERIS under MIT.
+exceptions = [
+    { allow = ["MPL-2.0"], crate = "dirs-sys" },
+    { allow = ["MPL-2.0"], crate = "option-ext" },
+]
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+allow-wildcard-paths = true
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]

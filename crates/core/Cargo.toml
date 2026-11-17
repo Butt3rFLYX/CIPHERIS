@@ -1,0 +1,22 @@
+[package]
+name = "cipheris_core"
+description = "CIPHERIS cryptographic envelope: Argon2id key wrapping and XChaCha20 Poly1305 authenticated encryption"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+[dependencies]
+argon2.workspace = true
+chacha20poly1305.workspace = true
+rand_core.workspace = true
+thiserror.workspace = true
+zeroize.workspace = true
+
+[dev-dependencies]
+rand_chacha.workspace = true
+blake2.workspace = true
+
+[lints]
+workspace = true
